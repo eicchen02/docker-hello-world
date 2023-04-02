@@ -1,7 +1,7 @@
 FROM python:3
 
 ENV APP_HOME /APP_HOMEWORKDIR $APP_HOME
-COPY . .
+COPY . ./
 
 RUN pip install Flask gunicorn 
 
