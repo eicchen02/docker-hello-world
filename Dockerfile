@@ -1,12 +1,8 @@
-FROM busybox:latest
-ENV PORT=8000
-LABEL maintainer="Chris <c@crccheck.com>"
+FROM python:3
 
-ADD index.html /www/index.html
+ENV APP_HOME /APP_HOMEWORKDIR $APP_HOME
+COPY . .
 
-# EXPOSE $PORT
+RUN pip install Flask gunicorn 
 
-HEALTHCHECK CMD nc -z localhost $PORT
-
-# Create a basic webserver and run it until the container is stopped
-CMD echo "httpd started" && trap "exit 0;" TERM INT; httpd -v -p $PORT -h /www -f & wait
+CMD exec gunicorn --bind :$POT --workers 1 --threads 8 --timeout 0 app:app
